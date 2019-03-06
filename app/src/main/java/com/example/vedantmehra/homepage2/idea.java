@@ -1,11 +1,15 @@
 package com.example.vedantmehra.homepage2;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class idea extends AppCompatActivity {
@@ -15,7 +19,30 @@ public class idea extends AppCompatActivity {
         String title,body;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_idea);
-
+        BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.action_add:
+                        Intent intent = new Intent(idea.this, relation.class);
+                        Toast.makeText(idea.this, "Relations", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+                    case R.id.action_edit:
+                        intent = new Intent(idea.this, notification.class);
+                        Toast.makeText(idea.this, "Notification", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+                    case R.id.action_remove:
+                        intent = new Intent(idea.this, profile_student.class);
+                        Toast.makeText(idea.this, "Profile", Toast.LENGTH_SHORT).show();
+                        startActivity(intent);
+                        break;
+                }
+                return true;
+            }
+        });
     }
     public void editPage(View view){
         Intent intent = new Intent(this , dummypage.class);

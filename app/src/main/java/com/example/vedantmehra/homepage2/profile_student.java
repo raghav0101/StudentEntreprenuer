@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class profile_student extends AppCompatActivity {
     Button bt;
     Button btw;
+    Button btww;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +23,14 @@ public class profile_student extends AppCompatActivity {
             public void onClick(View view) {
                 Intent inte=new Intent(getApplicationContext(),idea.class);
                 startActivity(inte);
+            }
+        });
+        btww = findViewById(R.id.button3);
+        btww.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intt = new Intent(getApplicationContext(),changepassword.class);
+                startActivity(intt);
             }
         });
     }
