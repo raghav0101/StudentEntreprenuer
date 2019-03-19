@@ -1,5 +1,6 @@
 package com.example.vedantmehra.homepage2;
 
+
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -21,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class HomePage extends AppCompatActivity {
+public class HomePageMentor extends AppCompatActivity {
 
     private DrawerLayout dl;
     private ActionBarDrawerToggle abdt;
@@ -34,7 +35,7 @@ public class HomePage extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_page);
+        setContentView(R.layout.activity_home_page_mentor);
 
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -52,35 +53,24 @@ public class HomePage extends AppCompatActivity {
             }
         });
 
-        if(userType[0].equals("0")){
-            Intent intent = new Intent(HomePage.this, HomePageStudent.class);
-            startActivity(intent);
-            finish();
-        }else if(userType[0].equals("2")){
-            Intent intent = new Intent(HomePage.this, HomePageMentor.class);
-            startActivity(intent);
-            finish();
-        }
-
-
         BottomNavigationView bottomNavigationView = (BottomNavigationView)findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.action_add:
-                        Intent intent = new Intent(HomePage.this, relation.class);
-                        Toast.makeText(HomePage.this, "Relations", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(HomePageMentor.this, relation.class);
+                        Toast.makeText(HomePageMentor.this, "Relations", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                     case R.id.action_edit:
-                        intent = new Intent(HomePage.this, notification.class);
-                        Toast.makeText(HomePage.this, "Notification", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(HomePageMentor.this, notification.class);
+                        Toast.makeText(HomePageMentor.this, "Notification", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                     case R.id.action_remove:
-                        intent = new Intent(HomePage.this, profile_student.class);
-                        Toast.makeText(HomePage.this, "Profile", Toast.LENGTH_SHORT).show();
+                        intent = new Intent(HomePageMentor.this, profile_student.class);
+                        Toast.makeText(HomePageMentor.this, "Profile", Toast.LENGTH_SHORT).show();
                         startActivity(intent);
                         break;
                 }
@@ -106,20 +96,26 @@ public class HomePage extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id = menuItem.getItemId();
-               // Intent intent = new Intent(HomePage.this, NewPage.class);
+                // Intent intent = new Intent(HomePage.this, NewPage.class);
 
                 if(id == R.id.myprof){
-                    Toast.makeText(HomePage.this, "My Profile", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(HomePage.this, profile_student.class);
+                    Toast.makeText(HomePageMentor.this, "My Profile", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomePageMentor.this, profile_student.class);
                     startActivity(intent);
 
                 }else if(id == R.id.relat){
-                    Toast.makeText(HomePage.this, "My Relations", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(HomePage.this, relation.class);
+                    Toast.makeText(HomePageMentor.this, "My Relations", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomePageMentor.this, relation.class);
                     startActivity(intent);
+
+                }else if(id == R.id.idea){
+                    Toast.makeText(HomePageMentor.this, "My Idea", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomePageMentor.this, idea.class);
+                    startActivity(intent);
+
                 }else if(id == R.id.logout){
-                    Toast.makeText(HomePage.this, "Log Out", Toast.LENGTH_SHORT).show();
-                    Intent intent1 = new Intent(HomePage.this,MainActivity.class);
+                    Toast.makeText(HomePageMentor.this, "Log Out", Toast.LENGTH_SHORT).show();
+                    Intent intent1 = new Intent(HomePageMentor.this,MainActivity.class);
                     FirebaseAuth firebaseAuth;
                     firebaseAuth = FirebaseAuth.getInstance();
                     firebaseAuth.signOut();
@@ -129,22 +125,12 @@ public class HomePage extends AppCompatActivity {
                     finish();
 
                 }else if(id == R.id.notif){
-                    Toast.makeText(HomePage.this, "Notification Page", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(HomePage.this, notification.class);
+                    Toast.makeText(HomePageMentor.this, "Notification Page", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(HomePageMentor.this, notification.class);
                     startActivity(intent);
 
                 }
-                else if(id == R.id.wallet){
-                    if(userType[0].equals("0")){
-                        Toast.makeText(HomePage.this, "Wallet", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomePage.this, WalletPageStudent.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(HomePage.this, "Wallet", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(HomePage.this, WalletPageInvestor.class);
-                        startActivity(intent);
-                    }
-                }
+
                 return true;
             }
         });
