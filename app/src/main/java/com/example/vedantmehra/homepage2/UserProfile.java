@@ -3,10 +3,13 @@ package com.example.vedantmehra.homepage2;
 
 
 public class UserProfile {
-    public String name, userEmail, userBio;
+    public String name, userEmail;// userBio;
     public Integer userType;
     public String occupation, company;
     public String school, degree, graduation, branch;
+
+    public UserProfile() {
+    }
 
     public UserProfile(String name, String userEmail, Integer userType,
                        String occupation, String company,
@@ -64,9 +67,9 @@ public class UserProfile {
         this.branch = branch;
     }
 
-    public void setUserBio(String userBio) {
-        this.userBio = userBio;
-    }
+    //public void setUserBio(String userBio) {
+      //  this.userBio = userBio;
+    //}
 
     public String getOccupation() {
         return occupation;
@@ -84,9 +87,9 @@ public class UserProfile {
         this.company = company;
     }
 
-    public String getUserBio() {
-        return userBio;
-    }
+    //public String getUserBio() {
+      //  return userBio;
+    //}
 
     public String getUserEmail() {
         return userEmail;

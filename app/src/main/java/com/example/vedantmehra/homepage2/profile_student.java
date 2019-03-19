@@ -1,27 +1,115 @@
 package com.example.vedantmehra.homepage2;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class profile_student extends AppCompatActivity {
     Button bt;
     Button btw;
     Button btww;
+    UserProfile profile;
+    String tag;
+    TextView textView3,textView4,textView14,textView5,textView6,textView7,textView8,textView11,textView12,textView13;
+    FirebaseAuth Mauth = FirebaseAuth.getInstance();
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user");
+    String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_student);
+
+        textView3 = findViewById(R.id.textView3);
+        textView14 = findViewById(R.id.textView14);
+        textView13=findViewById(R.id.textView13);
+        textView4 = findViewById(R.id.textView4);
+        textView5=findViewById(R.id.textView5);
+        textView6=findViewById(R.id.textView6);
+        textView7=findViewById(R.id.textView7);
+        textView8=findViewById(R.id.textView8);
+        textView11=findViewById(R.id.textView11);
+        textView12=findViewById(R.id.textView12);
         bt = findViewById(R.id.button);
+        uid = Mauth.getUid();
         btw = findViewById(R.id.button2);
+        ref = ref.child(uid);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tag = dataSnapshot.child("tag").child("tag").getValue(String.class);
+                profile = dataSnapshot.child("profile").getValue(UserProfile.class);
+               // Toast.makeText(profile_student.this, "lavdesh", Toast.LENGTH_SHORT).show();
+
+                if (tag.equals("0")) {
+                    textView3.setText(profile.name);
+                    textView13.setText("Email");
+                    textView14.setText(profile.userEmail);
+                    textView5.setText("College");
+                    textView6.setText(profile.school);
+                    textView7.setText("Degree");
+                    textView8.setText(profile.degree);
+                    textView11.setText("Year");
+                    textView12.setText(profile.graduation);
+
+                } else if (tag.equals("1")) {
+                    textView3.setText(profile.name);
+                    textView13.setText("Email");
+                    textView14.setText(profile.userEmail);
+                    textView5.setText("Company");
+                    textView6.setText(profile.company);
+                    textView7.setText("Designation");
+                    textView8.setText(profile.occupation);
+                    textView11.setVisibility(View.INVISIBLE);
+                    textView12.setVisibility(View.INVISIBLE);
+                    btw.setVisibility(View.INVISIBLE);
+
+
+                } else if (tag.equals("2")) {
+                    textView3.setText(profile.name);
+                    textView13.setText("Email");
+                    textView14.setText(profile.userEmail);
+                    textView5.setText("Company");
+                    textView6.setText(profile.company);
+                    textView7.setText("Designation");
+                    textView8.setText(profile.occupation);
+                    textView11.setVisibility(View.INVISIBLE);
+                    textView12.setVisibility(View.INVISIBLE);
+                    btw.setVisibility(View.INVISIBLE);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),profile_student_edit.class);
+                startActivity(intent);
+            }
+        });
         btw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent inte=new Intent(getApplicationContext(),idea.class);
+                Intent inte = new Intent(getApplicationContext(), idea.class);
                 startActivity(inte);
             }
         });
@@ -29,55 +117,10 @@ public class profile_student extends AppCompatActivity {
         btww.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intt = new Intent(getApplicationContext(),changepassword.class);
+                Intent intt = new Intent(getApplicationContext(), changepassword.class);
                 startActivity(intt);
             }
         });
     }
-    public void goEdit(View view)
-    {
-        Intent intent = new Intent(this , profile_student_edit.class);
-        TextView et_Location = (TextView) findViewById(R.id.textView3);
-        TextView et_Location1 = (TextView) findViewById(R.id.textView4);
-        TextView et_Location2 = (TextView) findViewById(R.id.textView6);
-        TextView et_Location3 = (TextView) findViewById(R.id.textView8);
-        TextView et_Location4 = (TextView) findViewById(R.id.textView10);
-        TextView et_Location5 = (TextView) findViewById(R.id.textView12);
-        TextView et_Location6 = (TextView) findViewById(R.id.textView14);
-        intent.putExtra("textView3",et_Location.getText().toString());
-        intent.putExtra("textView4",et_Location1.getText().toString());
-        intent.putExtra("textView6",et_Location2.getText().toString());
-        intent.putExtra("textView8",et_Location3.getText().toString());
-        intent.putExtra("textView10",et_Location4.getText().toString());
-        intent.putExtra("textView12",et_Location5.getText().toString());
-        intent.putExtra("textView14",et_Location6.getText().toString());
-        startActivityForResult(intent, 123);
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 123){
-            String heading = data.getStringExtra("location");
-            String bod = data.getStringExtra("location1");
-            String bod1 = data.getStringExtra("location2");
-            String bod2 = data.getStringExtra("location3");
-            String bod3 = data.getStringExtra("location4");
-            String bod4 = data.getStringExtra("location5");
-            String bod5 = data.getStringExtra("location6");
-            TextView textveiw = (TextView) findViewById(R.id.textView3);
-            textveiw.setText(heading);
-            TextView textveiw2 = (TextView) findViewById(R.id.textView4);
-            textveiw2.setText(bod);
-            TextView textveiw3 = (TextView) findViewById(R.id.textView6);
-            textveiw3.setText(bod1);
-            TextView textveiw4 = (TextView) findViewById(R.id.textView8);
-            textveiw4.setText(bod2);
-            TextView textveiw5 = (TextView) findViewById(R.id.textView10);
-            textveiw5.setText(bod3);
-            TextView textveiw6 = (TextView) findViewById(R.id.textView12);
-            textveiw6.setText(bod4);
-            TextView textveiw7 = (TextView) findViewById(R.id.textView14);
-            textveiw7.setText(bod5);
-        }
-    }
 }
+
